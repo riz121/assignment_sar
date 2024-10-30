@@ -1,18 +1,21 @@
 import re
 
-# Function to process the file
 def process_file(filename):
     results = []
     # Read the file line by line
     with open(filename, 'r') as file:
-        for line_number, line in enumerate(file, start=1):
+        for line in file:
             # Check if "frontend" is in the line
             if 'frontend' in line:
-                # Extract the "frontend" part using regex
-                match = re.search(r'(frontend_[\w]+)', line)
-                if match:
-                    frontend_value = match.group(1)
-                    results.append((frontend_value, line_number))
+                # Extract the "frontend" value using regex
+                frontend_match = re.search(r'(frontend_[\w]+)', line)
+                # Extract the number using regex
+                number_match = re.search(r'\b(\d+)\b', line)
+                
+                if frontend_match and number_match:
+                    frontend_value = frontend_match.group(1)
+                    number_value = number_match.group(1)
+                    results.append((frontend_value, number_value))
     return results
 
 # Specify the filename
@@ -22,5 +25,5 @@ filename = '123.txt'
 results = process_file(filename)
 
 # Print the results
-for frontend_value, line_number in results:
-    print(f"{frontend_value} {line_number}")
+for frontend_value, number_value in results:
+    print(f"{frontend_value} {number_value}")

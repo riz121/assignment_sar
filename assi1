@@ -1,0 +1,26 @@
+import re
+
+# Function to process the file
+def process_file(filename):
+    results = []
+    # Read the file line by line
+    with open(filename, 'r') as file:
+        for line_number, line in enumerate(file, start=1):
+            # Check if "frontend" is in the line
+            if 'frontend' in line:
+                # Extract the "frontend" part using regex
+                match = re.search(r'(frontend_[\w]+)', line)
+                if match:
+                    frontend_value = match.group(1)
+                    results.append((frontend_value, line_number))
+    return results
+
+# Specify the filename
+filename = '123.txt'
+
+# Get the results
+results = process_file(filename)
+
+# Print the results
+for frontend_value, line_number in results:
+    print(f"{frontend_value} {line_number}")
